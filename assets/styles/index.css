@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
+:root {
+    --dark-blue: #211951;
+    --blue: #836FFF;
+    --green: #15F5BA;
+    --white: #F0F3FF;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Nunito Sans", sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    background-color: var(--white);
+    width: 100vw;
+    height: 100vh;
+}
+
+/* header */
+header {
+    width: 100vw;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--green);
+}
+
+header div {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+#logo-img {
+    width: 7%;
+    height: auto;
+}
+
+/* main */
+main {
+    width: 80%;
+    height: 80vh; /* Ajuste a altura do main para permitir que o footer fique fixo */
+    display: flex;
+}
+
+#left-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 55%;
+    height: 100%;
+}
+
+#left-main img {
+    width: 100%;
+}
+
+#right-main {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    width: 35%;
+    height: auto;
+    overflow-y: auto; /* Permite que o conteúdo role se for muito alto */
+}
+
+/* login form */
+.form.active {
+    display: flex; /* Mostra apenas o formulário ativo */
+}
+
+.form {
+    width: 100%; /* Ajusta para ocupar toda a largura disponível */
+    height: auto;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    padding: 10px;
+    gap: 1rem;
+}
+
+.form h2 {
+    font-weight: bold;
+}
+
+#login-register-buttons {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#login-register-buttons div {
+    width: 50%;
+    height: 100%;
+    text-align: center;
+    cursor: pointer;
+    padding: 10px 0;
+    font-weight: bold;
+    border-bottom: 1px solid gray;
+}
+
+#login-register-buttons div.active {
+    border-bottom: 4px solid var(--green);
+}
+
+#social-media {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    font-size: 2.6rem;
+    cursor: pointer;
+}
+
+.fa-facebook {
+    color: #3b5998; /* facebook color */
+}
+
+.fa-google {
+    color: #dd4b38; /* google color */
+}
+
+#form-data {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.8rem;
+}
+
+#form-data p {
+    width: 100%;
+    margin-top: -0.5rem; 
+    text-decoration: underline;
+    color: #211951;
+}
+
+#form-data div {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+    height: 100%;
+}
+
+#form-data div input {
+    width: 100%;
+    padding: 10px 0px 10px 15px;
+    border-radius: 10px;
+    border: 1px solid var(--dark-blue);
+}
+
+.button-login-register {
+    width: 100%;
+    padding: 15px 0;
+    border-radius: 10px;
+    color: var(--white);
+    background-color: var(--dark-blue);
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+/* footer */
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid rgba(128, 128, 128, 0.362);
+    line-height: 1.5;
+    padding: 1rem;
+    font-size: 0.8rem;
+}

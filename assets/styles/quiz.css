@@ -1,0 +1,190 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.caminho {
+    position: relative;
+    width: 80%;
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+}
+
+.quadrado {
+    width: 120px;
+    height: 120px;
+    background-color: #95a5a6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 20px 0;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    transition: transform 0.2s, background-color 0.2s;
+    position: relative;
+}
+
+.quadrado:hover {
+    transform: scale(1.1);
+}
+
+.quadrado.bloqueado {
+    cursor: not-allowed;
+}
+
+.quadrado.bloqueado::after {
+    content: '\f023';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 20px;
+    color: #e74c3c;
+}
+
+.quadrado.desbloqueado {
+    background-color: #3498db;
+    cursor: pointer;
+}
+
+.quadrado.desbloqueado::after {
+    content: none;
+}
+
+.esfera {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #95a5a6;
+    cursor: not-allowed;
+    transition: transform 0.2s, background-color 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    margin: 10px 0;
+    position: relative;
+}
+
+.esfera:hover {
+    transform: scale(1.1);
+}
+
+.esfera.bloqueada::after {
+    content: '\f023';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 20px;
+    color: #e74c3c;
+}
+
+.esfera:not(.bloqueada) {
+    background-color: #2ecc71;
+    cursor: pointer;
+}
+
+.esfera:not(.bloqueada)::after {
+    content: none;
+}
+
+.esfera.desbloqueada {
+    background-color: #2ecc71;
+    cursor: pointer;
+}
+
+.esfera.desbloqueada::after {
+    content: none;
+}
+
+.linha {
+    position: absolute;
+    width: 2px;
+    background-color: #3498db;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: -1;
+}
+
+.quadrado, .esfera {
+    position: relative;
+    z-index: 2;
+}
+
+.modal-dialog {
+    z-index: 1050; 
+}
+
+#quizForm {
+    margin-top: 20px;
+}
+
+#quizForm div {
+    margin-bottom: 10px;
+}
+
+#confirmarResposta {
+    margin-top: 20px;
+}
+
+.fechar {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-conteudo button {
+    margin: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+#confirmar {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+}
+
+#sair {
+    background-color: #f44336;
+    color: white;
+    border: none;
+}
+
+.trofeu {
+    font-size: 3.5rem;
+    color: #858585;
+    background-color: #95a5a6;
+    z-index: 2;
+}
+
+.trofeu.bloqueado {
+    cursor: not-allowed;
+}
+
+.trofeu.desbloqueado {
+    cursor: pointer;
+    color: #f1c40f;
+}
+
+.trofeu:hover {
+    transform: scale(1.1);
+}
