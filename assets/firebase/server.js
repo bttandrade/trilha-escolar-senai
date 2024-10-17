@@ -1,21 +1,7 @@
-import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { db, auth } from './firebase_config.js';
 import express from 'express';
 
-const firebaseConfig = {
-    apiKey: "AIzaSyCPeNzz7biYqtWg68NznozglVUKA18Y7s4",
-    authDomain: "trilha-educacional-5e1cb.firebaseapp.com",
-    projectId: "trilha-educacional-5e1cb",
-    storageBucket: "trilha-educacional-5e1cb.appspot.com",
-    messagingSenderId: "211685584933",
-    appId: "1:211685584933:web:3b3410749edef661d50fcc"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
 const expressApp = express();
-
 expressApp.use(express.json());
 
 const validMaterias = ['Matemática', 'Português'];
@@ -27,9 +13,12 @@ expressApp.get('/:materia/assuntos', async (req, res) => {
         if (!validMaterias.includes(materia)) {
             return res.status(400).json({ error: `Matéria inválida. Use uma das seguintes: ${validMaterias.join(', ')}.` });
         }
-        const assuntosRef = collection(db, materia);
-        const assuntosSnapshot = await getDocs(assuntosRef);
+
+        // Usando db.collection no Admin SDK
+        const assuntosRef = db.collection(materia);
+        const assuntosSnapshot = await assuntosRef.get();
         const assuntos = assuntosSnapshot.docs.map(doc => doc.id);
+
         res.json(assuntos);
     } catch (error) {
         console.error("Erro ao buscar assuntos:", error);
@@ -44,22 +33,22 @@ expressApp.get('/:materia/:assunto/questoes', async (req, res) => {
         if (!validMaterias.includes(materia)) {
             return res.status(400).json({ error: `Matéria inválida. Use uma das seguintes: ${validMaterias.join(', ')}.` });
         }
-        const questoesRef = collection(db, materia, assunto, 'Questões');
-        const questoesSnapshot = await getDocs(questoesRef);
+
+        // Usando db.collection para acessar subcoleções
+        const questoesRef = db.collection(materia).doc(assunto).collection('Questões');
+        const questoesSnapshot = await questoesRef.get();
         const questoes = questoesSnapshot.docs.map(doc => ({
             id: doc.id,
-            ...doc.data()
+            ...doc.data(),
         }));
+
         res.json(questoes);
     } catch (error) {
         console.error("Erro ao buscar questões:", error);
         res.status(500).json({ error: "Erro ao buscar questões" });
     }
 });
-
 const PORT = process.env.PORT || 3000;
 expressApp.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
 });
-
-export { db };
