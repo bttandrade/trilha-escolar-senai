@@ -9,91 +9,74 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 </head>
 <body>
-    <header>
-        <div>
-            <p>Trilha Educacional</p>
-        </div>
-    </header>
-    <main>
-        <div id="left-main">
-            <img src="./assets/images/background-login.png" alt="Imagem de fundo">
-        </div>
-        <div id="right-main">
-            <form id="login-form" class="form active">
-                <h2>Entre com sua conta Trilha Educacional</h2>
-                <div id="login-register-buttons">
-                    <div id="login-opt" class="active">Já tenho conta</div>
-                    <div id="register-opt">Criar conta</div>
+    <div class="container" id="container">
+        <div class="form-container sign-up-container">
+            <form id="register-form">
+                <h1>Crie sua conta</h1>
+                <div class="social-container">
+                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                    <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
                 </div>
-                <div id="social-media">
-                    <i class="fa-brands fa-facebook"></i>
-                    <i class="fa-brands fa-google"></i>
-                    <i class="fa-brands fa-apple"></i>
+                <span>ou preencha esses campos</span>
+                <div class="infield">
+                    <input type="text" placeholder="Nome" required id="name-create"/>
+                    <label></label>
                 </div>
-                <div id="hr-for-form">Entrar com email</div>
-                <div id="form-data">
-                    <div>
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required placeholder="Digite seu Email">
-                    </div>
-                    <div>
-                        <label for="password">Senha</label>
-                        <input type="password" name="password" id="password" required placeholder="Digite sua senha">
-                    </div>
-                    <p>Esqueceu a senha?</p>
+                <div class="infield">
+                    <input type="email" placeholder="Email" name="email" required id="email-create"/>
+                    <label></label>
                 </div>
-                <button id="login-btn" class="button-login-register">Entrar</button>
-            </form>
-            <form id="register-form" class="form"> <!-- O formulário de registro começa oculto -->
-                <h2>Crie sua conta Trilha Educacional</h2>
-                <div id="login-register-buttons">
-                    <div id="login-opt-register">Já tenho conta</div>
-                    <div id="register-opt" class="active">Criar conta</div>
+                <div class="infield">
+                    <input type="password" placeholder="Senha" required id="password-create"/>
+                    <label></label>
                 </div>
-                <div id="social-media">
-                    <i class="fa-brands fa-facebook"></i>
-                    <i class="fa-brands fa-google"></i>
-                    <i class="fa-brands fa-apple"></i>
+                <div class="infield">
+                    <input type="password" placeholder="Confirme sua senha" required id="confirm-password-create"/>
+                    <label></label>
                 </div>
-                <div id="hr-for-form">Entrar com email</div>
-                <div id="form-data">
-                    <div>
-                        <label for="nome">Nome</label>
-                        <input type="text" id="name" required placeholder="Digite seu nome">
-                    </div>
-                    <div>
-                        <label for="email">Email</label>
-                        <input type="email" id="email_register" name="email_register" required placeholder="Digite seu Email">
-                    </div>
-                    <div>
-                        <label for="password">Senha</label>
-                        <input type="password" name="password_register" id="password_register" required placeholder="Digite sua senha">
-                    </div>
-                    <div>
-                        <label for="password-repeat">Confirmar senha</label>
-                        <input type="password" name="password_repeat" id="password-repeat" required placeholder="Confirme sua senha">
-                    </div>
-                </div>
-                <button id="register-btn" class="button-login-register">Criar conta</button>
+                <button id="signUp-btn">Cadastrar-se</button>
             </form>
         </div>
-    </main>
-    <footer>
-        <p>Copyright © 2024 - Trila Educacional S.A. – CNPJ 10.393.366/0001-21</p>
-        <p>Av. Barão de Tefé, 27, Sala 602 - Rio de Janeiro/RJ, CEP 20220-460</p>
-    </footer>
-    <script>
-      document.getElementById('register-opt').addEventListener('click', () => {
-            document.getElementById('login-form').classList.remove('active');  // Esconde o formulário de login
-            document.getElementById('register-form').classList.add('active');  // Mostra o formulário de registro
-        });
-
-        document.getElementById('login-opt-register').addEventListener('click', () => {
-            document.getElementById('register-form').classList.remove('active');  // Esconde o formulário de registro
-            document.getElementById('login-form').classList.add('active');  // Mostra o formulário de login
-        });
-
-    </script>
+        <div class="form-container sign-in-container">
+            <form id="login-form">
+                <h1>Entrar com</h1>
+                <div class="social-container">
+                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social"><i class="fab fa-google"></i></a>
+                    <a href="#" class="social"><i class="fab fa-github"></i></a>
+                </div>
+                <span>ou use sua conta Allen Vision</span>
+                <div class="infield">
+                    <input type="email" placeholder="Email" name="email" id="email-login" required/>
+                    <label></label>
+                </div>
+                <div class="infield">
+                    <input type="password" placeholder="Senha" required id="password-login"/>
+                    <label></label>
+                </div>
+                <a href="#" class="forgot">Esqueceu a senha?</a>
+                <button id="login-btn">Logar</button>
+            </form>
+        </div>
+        <div class="overlay-container" id="overlayCon">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <div class="overlay-left-div">
+                        <img src="./assets/images/trilha-logo.png" alt="" class="overlay-logo">
+                        <button>Já tenho conta</button>
+                    </div>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <div class="overlay-right-div">
+                        <img src="./assets/images/trilha-logo.png" alt="" class="overlay-logo">
+                        <button>Quero me cadastrar</button>
+                    </div>
+                </div>
+            </div>
+            <button id="overlayBtn"></button>
+        </div>
+    </div>
     <script type="module" src="./assets/scripts/index.js"></script>
 </body>
 </html>
