@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trilha Educacional</title>
+    <link rel="stylesheet" href="./assets/styles/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+</head>
+<body>
+    <div class="container" id="container">
+        <div class="form-container sign-up-container">
+            <form id="register-form">
+                <h1>Crie sua conta</h1>
+                <div class="social-container">
+                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                    <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+                <span>ou preencha esses campos</span>
+                <div class="infield">
+                    <input type="text" placeholder="Nome" required id="name-create"/>
+                    <label></label>
+                </div>
+                <div class="infield">
+                    <input type="email" placeholder="Email" name="email" required id="email-create"/>
+                    <label></label>
+                </div>
+                <div class="infield">
+                    <input type="password" placeholder="Senha" required id="password-create"/>
+                    <label></label>
+                </div>
+                <div class="infield">
+                    <input type="password" placeholder="Confirme sua senha" required id="confirm-password-create"/>
+                    <label></label>
+                </div>
+                <button id="signUp-btn">Cadastrar-se</button>
+            </form>
+        </div>
+        <div class="form-container sign-in-container">
+            <form id="login-form">
+                <h1>Entrar com</h1>
+                <div class="social-container">
+                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social"><i class="fab fa-google"></i></a>
+                    <a href="#" class="social"><i class="fab fa-github"></i></a>
+                </div>
+                <span>ou use outra conta</span>
+                <div class="infield">
+                    <input type="email" placeholder="Email" name="email" id="email-login" required/>
+                    <label></label>
+                </div>
+                <div class="infield">
+                    <input type="password" placeholder="Senha" required id="password-login"/>
+                    <label></label>
+                </div>
+                <a href="#" class="forgot">Esqueceu a senha?</a>
+                <button id="login-btn">Logar</button>
+            </form>
+        </div>
+        <div class="overlay-container" id="overlayCon">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <div class="overlay-left-div">
+                        <img src="./assets/images/trilha-logo.png" alt="" class="overlay-logo">
+                        <button>Já tenho conta</button>
+                    </div>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <div class="overlay-right-div">
+                        <img src="./assets/images/trilha-logo.png" alt="" class="overlay-logo">
+                        <button>Quero me cadastrar</button>
+                    </div>
+                </div>
+            </div>
+            <button id="overlayBtn"></button>
+        </div>
+    </div>
+    <script>
+        document.getElementById('register-opt').addEventListener('click', () => {
+              document.getElementById('login-form').classList.remove('active');  // Esconde o formulário de login
+              document.getElementById('register-form').classList.add('active');  // Mostra o formulário de registro
+          });
+  
+          document.getElementById('login-opt-register').addEventListener('click', () => {
+              document.getElementById('register-form').classList.remove('active');  // Esconde o formulário de registro
+              document.getElementById('login-form').classList.add('active');  // Mostra o formulário de login
+          });
+  
+      </script>
+      <script type="module" src="./assets/scripts/index.js"></script>
+</body>
+</html>
