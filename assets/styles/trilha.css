@@ -1,0 +1,242 @@
+:root {
+    --color-primary: #D17B13;
+    --color-secondary: #10375C;
+    --color-tertiary: #f1c40f;
+    --color-quaternary: #e74c3c;
+    --color-quinary: #95a5a6;
+    --color-senary: #4CAF50;
+    --color-text-light: #ffffff;
+    --color-text-dark: #333333;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.quadrado {
+    width: 100px;
+    height: 100px;
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.quadrado:hover {
+    transform: scale(1.05);
+}
+
+.quadrado.bloqueado {
+    cursor: not-allowed;
+}
+
+.quadrado.bloqueado::after {
+    content: '\f023';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 20px;
+    color: var(--color-quaternary);
+}
+
+.quadrado.desbloqueado {
+    background-color: var(--color-primary);
+    cursor: pointer;
+}
+
+.quadrado.desbloqueado::after {
+    content: none;
+}
+
+.esferas-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.esfera {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: var(--color-quinary);
+    cursor: not-allowed;
+    transition: transform 0.2s, background-color 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-text-light);
+    font-weight: bold;
+    margin: 10px 0;
+    position: relative;
+    font-size: 16px;
+    text-align: center;
+}
+
+.esfera:hover {
+    transform: scale(1.1);
+}
+
+.esfera.bloqueada::after {
+    content: '\f023';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 20px;
+    color: var(--color-quaternary);
+}
+
+.esfera:not(.bloqueada) {
+    background-color: var(--color-secondary);
+    cursor: pointer;
+}
+
+.esfera:not(.bloqueada)::after {
+    content: none;
+}
+
+.esfera.desbloqueada {
+    background-color: var(--color-secondary);
+    cursor: pointer;
+}
+
+.esfera.desbloqueada::after {
+    content: none;
+}
+
+.esfera.respondida {
+    background-color: var(--color-tertiary);
+    cursor: default;
+}
+
+.esfera.respondida::after {
+    content: '\f091';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: var(--color-text-light);
+}
+
+.quadrado, .esfera {
+    position: relative;
+    z-index: 2;
+}
+
+.modal-dialog {
+    z-index: 1050; 
+}
+
+#quizForm {
+    margin-top: 20px;
+}
+
+#quizForm div {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+#quizForm input[type="radio"] {
+    margin-right: 10px;
+}
+
+#quizForm label {
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#confirmarResposta {
+    margin-top: 20px;
+}
+
+.fechar {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-conteudo button {
+    margin: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+#confirmar {
+    background-color: var(--color-senary);
+    color: white;
+    border: none;
+}
+
+#sair {
+    background-color: var(--color-quaternary);
+    color: white;
+    border: none;
+}
+
+.trofeu {
+    font-size: 3.5rem;
+    color: #858585;
+    background-color: var(--color-quinary);
+    z-index: 2;
+}
+
+.trofeu.bloqueado {
+    cursor: not-allowed;
+}
+
+.trofeu.desbloqueado {
+    cursor: pointer;
+    color: var(--color-tertiary);
+}
+
+.trofeu:hover {
+    transform: scale(1.1);
+}
+
+/* Estilos para o modal de questões */
+.swal2-popup {
+    font-size: 16px;
+}
+
+.swal2-title {
+    font-size: 24px;
+    color: var(--color-primary);
+}
+
+.swal2-html-container {
+    text-align: left;
+}
+
+.swal2-confirm {
+    background-color: var(--color-primary) !important;
+}
+
+.swal2-cancel {
+    background-color: var(--color-quinary) !important;
+}
+
+#subject-title {
+    text-align: center;
+    margin-bottom: 20px;
+}

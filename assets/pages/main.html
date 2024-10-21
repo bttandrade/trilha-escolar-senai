@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@28,400,0,0" />
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/css/all.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <title>Trilha Educacional</title>
+</head>
+<body>
+    <header>
+        <div class="logo-3bar">
+            <i class="fa-light fa-bars" id="menu-toggle"></i>
+            <img src="../images/trilha-logo.png" alt="Logo" id="logo">
+            <p>Trilha Educacional</p>
+        </div>
+        <nav class="nav-header">
+            <div id="email-div">
+                <i class="fa-light fa-circle-user"></i>
+                <p id="user-email"></p>
+                <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class="logout">
+                <i class="fa-regular fa-arrow-right-from-bracket" id="logout"></i>
+            </div>
+        </nav>
+    </header>
+    
+    <main>
+        <div class="nav-bar-left" id="nav-bar-left">
+            <ul class="menu">
+                <li class="option">
+                    <a href="#">
+                        <i class="fa-solid fa-address-card"></i>
+                        <span>Perfil</span>
+                    </a>
+                </li>
+                <li class="option">
+                    <a href="#">
+                        <i class="fa-solid fa-book-open-cover"></i>
+                        <span>Trilhas</span>
+                    </a>
+                </li>
+                <li class="option">
+                    <a href="#">
+                        <i class="fa-solid fa-flag-swallowtail"></i>
+                        <span>Resumos</span>
+                    </a>
+                </li>
+                <li class="option">
+                    <a href="#">
+                        <i class="fa-solid fa-ballot-check"></i>
+                        <span>Questões</span>
+                    </a>
+                </li>
+                <li class="option">
+                    <a href="#">
+                        <i class="fa-sharp fa-solid fa-star-christmas"></i>
+                        <span>Planos</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="content" id="content">
+            <section class="category">
+                <h2>ENEM</h2>
+                <div class="grid-container">
+                    <div class="subject" data-subject="Ciências da Natureza">
+                        <i class="fa-solid fa-flask-vial"></i>
+                        <p>Ciências da Natureza</p>
+                    </div>
+                    <div class="subject" data-subject="Ciências Humanas">
+                        <i class="fa-solid fa-book-open"></i>
+                        <p>Ciências Humanas</p>
+                    </div>
+                    <div class="subject" data-subject="Linguagens, Códigos e suas tecnologias">
+                        <i class="fa-solid fa-comment"></i>
+                        <p>Linguagens, Códigos e suas Tecnologias</p>
+                    </div>
+                    <div class="subject" data-subject="Matemática e suas tecnologias">
+                        <i class="fa-solid fa-calculator"></i>
+                        <p>Matemática e suas tecnologias</p>
+                    </div>
+                    <div class="subject">
+                        <i class="fa-solid fa-pen-nib"></i>
+                        <p>Redação</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="category">
+                <h2>TRILHAS</h2>
+                <div class="grid-container">
+                    <div class="subject">
+                        <i class="fa-solid fa-spell-check"></i>
+                        <p>Português</p>
+                    </div>
+                    <div class="subject">
+                        <i class="fa-solid fa-calculator-simple"></i>
+                        <p>Matemática</p>
+                    </div>
+                    <div class="subject">
+                        <i class="fa-solid fa-building-columns"></i>
+                        <p>História</p>
+                    </div>
+                    <div class="subject">
+                        <i class="fa-solid fa-earth-europe"></i>
+                        <p>Geografia</p>
+                    </div>
+                    <div class="subject">
+                        <i class="fa-solid fa-atom"></i>
+                        <p>Física</p>
+                    </div>
+                    <div class="subject">
+                        <i class="fa-solid fa-flask"></i>
+                        <p>Química</p>
+                    </div>
+                    <div class="subject">
+                        <i class="fa-solid fa-dna"></i>
+                        <p>Biologia</p>
+                    </div>
+                    <div class="subject">
+                        <i class="fa-solid fa-closed-captioning"></i>
+                        <p>Inglês</p>
+                    </div>
+                    <div class="subject">
+                        <i class="fa-solid fa-scroll-old"></i>
+                        <p>Filosofia</p>
+                    </div>
+                </div>                
+            </section>
+        </div>
+    </main>
+    <script type="module" src="../scripts/main.js"></script>
+    <script>
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const navBarLeft = document.getElementById('nav-bar-left');
+            navBarLeft.classList.toggle('collapsed');
+            
+            const content = document.querySelector('.content');
+        });
+
+        document.querySelectorAll('.subject').forEach(subject => {
+            subject.addEventListener('click', function() {
+                const subjectName = this.dataset.subject || this.querySelector('p').textContent;
+                console.log(subjectName);
+                window.location.href = `trilha.html?subject=${encodeURIComponent(subjectName)}`;
+            });
+        });
+    </script>
+</body>
+</html>
