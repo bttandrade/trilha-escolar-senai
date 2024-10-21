@@ -1,181 +1,294 @@
-const caminho = document.getElementById('caminho');
-const modal = new bootstrap.Modal(document.getElementById('modal'));
-const modalTexto = document.getElementById('modal-texto');
+import { db, auth} from '../firebase/firebase_fe.js';
 
-let nivelAtual = 1;
-let questoes;
-let assuntosDesbloqueados = {};
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const subject = urlParams.get('subject');
+    
+    if (subject) {
+        document.getElementById('subject-title').textContent = decodeURIComponent(subject);
+        criarTrilha(subject);
+    }
+});
 
-// Função para obter o parâmetro da URL
-function getUrlParameter(name) {
-    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-    var results = regex.exec(location.search);
-    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-}
+async function criarTrilha(subject) {
+    const trilhaContainer = document.getElementById('trilha-container');
+    trilhaContainer.innerHTML = '';
 
-// Função para criar a trilha
-async function criarTrilha() {
     try {
-        const response = await fetch('../jsons/questoes.json');
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
+        // Fetch subjects from Firestore
+        const subjectsSnapshot = await db.collection(subject).get();
+        const assuntos = subjectsSnapshot.docs.map(doc => doc.id);
+
+        const user = auth.currentUser;
+        let userProgress = {};
         
-        // Obter o assunto da URL
-        const subject = getUrlParameter('subject');
-        
-        // Verificar se o assunto existe no JSON
-        if (data[subject]) {
-            questoes = data[subject][0];
-        } else {
-            throw new Error('Assunto não encontrado no JSON');
+        if (user) {
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            const userData = userDoc.data();
+            userProgress = userData.trilhas && userData.trilhas[subject] ? userData.trilhas[subject] : {};
         }
 
-        let nivelGlobal = 1;
-
-        // Adicionar a linha
-        const linha = document.createElement('div');
-        linha.className = 'linha';
-        caminho.appendChild(linha);
-
-        for (const [assunto, questoesAssunto] of Object.entries(questoes)) {
-            // Criar quadrado para o assunto
+        assuntos.forEach((assunto, index) => {
             const quadrado = document.createElement('div');
-            quadrado.className = 'quadrado desbloqueado';
-            quadrado.textContent = assunto;
-            quadrado.dataset.assunto = assunto;
-            quadrado.addEventListener('click', () => abrirModalAssunto(assunto));
-            caminho.appendChild(quadrado);
+            quadrado.className = 'quadrado';
+            quadrado.addEventListener('click', () => abrirModalAssunto(assunto, subject));
+            trilhaContainer.appendChild(quadrado);
 
-            assuntosDesbloqueados[assunto] = false;
+            const esferasContainer = document.createElement('div');
+            esferasContainer.className = 'esferas-container';
+            trilhaContainer.appendChild(esferasContainer);
 
-            // Criar esferas para as questões do assunto
-            questoesAssunto.forEach((questao, index) => {
+            const nivelAtual = userProgress[assunto] || 0;
+            quadrado.innerHTML = `${assunto}<br>Nível: ${nivelAtual}`;
+
+            for (let i = 1; i <= 5; i++) {
                 const esfera = document.createElement('div');
-                esfera.className = 'esfera bloqueada';
-                esfera.textContent = nivelGlobal;
+                esfera.className = 'esfera';
+                esfera.textContent = i;
                 esfera.dataset.assunto = assunto;
-                esfera.dataset.indice = index;
-                esfera.dataset.nivel = nivelGlobal;
-                esfera.addEventListener('click', abrirModal);
-                caminho.appendChild(esfera);
-                nivelGlobal++;
-            });
-        }
+                esfera.dataset.nivel = i;
 
-        // Adicionar o troféu ao final do caminho
+                if (i <= nivelAtual) {
+                    esfera.classList.add('respondida');
+                    esfera.textContent = '';
+                } else if (i === nivelAtual + 1) {
+                    esfera.classList.add('desbloqueada');
+                } else {
+                    esfera.classList.add('bloqueada');
+                }
+
+                esfera.addEventListener('click', (event) => iniciarQuestao(event, subject, assunto, i));
+                esferasContainer.appendChild(esfera);
+            }
+        });
+
         const trofeu = document.createElement('div');
         trofeu.className = 'quadrado trofeu bloqueado';
         trofeu.innerHTML = '<i class="fa-solid fa-award"></i>';
         trofeu.addEventListener('click', mostrarMensagemFinal);
-        caminho.appendChild(trofeu);
-
+        trilhaContainer.appendChild(trofeu);
     } catch (error) {
-        console.error('Erro ao carregar as questões:', error);
+        console.error('Erro ao carregar os assuntos:', error);
+        Swal.fire('Erro', 'Não foi possível carregar os assuntos. Por favor, tente novamente.', 'error');
     }
 }
 
-function abrirModalAssunto(assunto) {
-    if (!assuntosDesbloqueados[assunto]) {
-        modalTexto.innerHTML = `
-            <h3>Assunto: ${assunto}</h3>
-            <p>Este é o módulo de ${assunto}. Você está pronto para começar?</p>
-            <button class="btn btn-primary" onclick="desbloquearAssunto('${assunto}')">Começar</button>
-            <button class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-        `;
+async function abrirModalAssunto(assunto, subject) {
+    const user = auth.currentUser;
+
+    // Log para verificar se o usuário está autenticado
+    console.log("Usuário autenticado:", user);
+    console.log(assunto, subject);
+    if (user) {
+        try {
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            const userData = userDoc.data();
+            const nivelAtual = userData.trilhas && userData.trilhas[subject] && userData.trilhas[subject][assunto] ? userData.trilhas[subject][assunto] : 0;
+            console.log(`Nível atual do usuário em ${subject} - ${assunto}: ${nivelAtual}`);
+
+            // Exibir o PDF no Swal
+            Swal.fire({
+                title: `Assunto: ${assunto}`,
+                text: `Este é o módulo de ${assunto}. Você está pronto para começar?`,
+                showCancelButton: true,
+                confirmButtonText: 'Começar',
+                cancelButtonText: 'Fechar',
+                html: `
+                    <div class="pdf-modal">
+                        <iframe src="http://localhost:3000/${subject}/${assunto}/pdf#toolbar=0&navpanes=0&scrollbar=0" id="pdfIframe"></iframe>
+                    </div>
+                `,
+                customClass: {
+                    container: 'pdf-swal-container'
+                },
+                width: '60%',
+                heightAuto: false,
+                didOpen: () => {
+                    // Adicionar CSS personalizado ao modal
+                    const style = document.createElement('style');
+                    style.innerHTML = `
+                        .pdf-modal {
+                            position: relative;
+                            padding: 0; /* Remover padding */
+                            width: 100%;
+                            height: 80vh; /* Ajustar altura */
+                            overflow: hidden; /* Ocultar o overflow */
+                        }
+                        #pdfIframe {
+                            width: 100%; /* Ajustar largura para 100% */
+                            height: 100%;
+                            border: none; /* Remover borda do iframe */
+                            margin: 0; /* Remover margens */
+                            padding: 0; /* Remover padding */
+                        }
+                        .pdf-swal-container {
+                            padding: 0; /* Remover padding do container */
+                            border: none; /* Remover borda do SweetAlert */
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    desbloquearAssunto(assunto);
+                }
+            });
+
+        } catch (error) {
+            console.error("Erro ao buscar nível do usuário:", error);
+            Swal.fire({
+                title: 'Erro!',
+                text: 'Ocorreu um erro ao buscar os dados do usuário.',
+                icon: 'error'
+            });
+        }
     } else {
-        modalTexto.innerHTML = `
-            <h3>Assunto: ${assunto}</h3>
-            <p>Este é o módulo de ${assunto}. Clique nas esferas para responder às questões.</p>
-            <button class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-        `;
+        console.log("Usuário não está logado");
+        Swal.fire({
+            title: 'Acesso Negado',
+            text: 'Você precisa estar logado para acessar este módulo.',
+            icon: 'warning'
+        });
     }
-    modal.show();
 }
+
+
 
 function desbloquearAssunto(assunto) {
-    assuntosDesbloqueados[assunto] = true;
     const esferas = document.querySelectorAll(`.esfera[data-assunto="${assunto}"]`);
     esferas.forEach((esfera, index) => {
         if (index === 0) {
             esfera.classList.remove('bloqueada');
             esfera.classList.add('desbloqueada');
-            nivelAtual = parseInt(esfera.dataset.nivel);
         }
     });
-    modal.hide();
 }
 
-function abrirModal(event) {
+async function abrirModal(event, subject) {
     const assunto = event.target.dataset.assunto;
-    const indice = parseInt(event.target.dataset.indice);
     const numeroEsfera = parseInt(event.target.textContent);
 
-    if (!assuntosDesbloqueados[assunto] || event.target.classList.contains('bloqueada')) {
-        alert('Esta esfera ainda está bloqueada. Complete os níveis anteriores primeiro.');
+    if (event.target.classList.contains('bloqueada')) {
+        Swal.fire('Bloqueado', 'Esta esfera ainda está bloqueada. Complete os níveis anteriores primeiro.', 'warning');
         return;
     }
 
-    event.target.classList.remove('bloqueada');
+    if (event.target.classList.contains('respondida')) {
+        Swal.fire({
+            title: 'Questão Respondida',
+            text: 'Você já completou esse nível!',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+        return;
+    }
 
-    const questao = questoes[assunto][indice];
-    
-    modalTexto.innerHTML = `
-        <h3>Questão ${numeroEsfera}: ${questao.pergunta}</h3>
-        <form id="quizForm">
-            ${questao.opcoes.map((opcao, index) => `
-                <div>
-                    <input type="radio" id="opcao${index}" name="resposta" value="${opcao}">
-                    <label for="opcao${index}">${opcao}</label>
-                </div>
-            `).join('')}
-            <button type="submit" class="btn btn-primary" id="confirmarResposta">Confirmar Resposta</button>
-        </form>
-    `;
-    modal.show();
+    try {
+        const response = await fetch(`http://localhost:3000/${encodeURIComponent(subject)}/${encodeURIComponent(assunto)}/questoes`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const questoes = await response.json();
 
-    document.getElementById('quizForm').addEventListener('submit', (e) => {
-        e.preventDefault();
-        verificarResposta(questao.resposta, numeroEsfera, event.target);
+        if (questoes.length > 0) {
+            const questaoAleatoria = questoes[Math.floor(Math.random() * questoes.length)];
+            mostrarQuestao(questaoAleatoria, numeroEsfera, event.target);
+        } else {
+            Swal.fire('Erro', 'Não há questões disponíveis para este assunto.', 'error');
+        }
+    } catch (error) {
+        console.error('Erro ao carregar a questão:', error);
+        Swal.fire('Erro', 'Não foi possível carregar a questão. Por favor, tente novamente.', 'error');
+    }
+}
+
+function mostrarQuestao(questao, numeroEsfera, esfera) {
+    Swal.fire({
+        title: `Questão ${numeroEsfera}`,
+        html: `
+            <p>${questao.texto}</p>
+            <form id="quizForm">
+                ${questao.alternativas.map((opcao, index) => `
+                    <div>
+                        <input type="radio" id="opcao${index}" name="resposta" value="${opcao}">
+                        <label for="opcao${index}">${opcao}</label>
+                    </div>
+                `).join('')}
+            </form>
+        `,
+        showCancelButton: true,
+        confirmButtonText: 'Confirmar Resposta',
+        cancelButtonText: 'Fechar',
+        preConfirm: () => {
+            const respostaSelecionada = document.querySelector('input[name="resposta"]:checked');
+            if (!respostaSelecionada) {
+                Swal.showValidationMessage('Por favor, selecione uma resposta');
+                return false;
+            }
+            return respostaSelecionada.value;
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            verificarResposta(questao.resposta, result.value, numeroEsfera, esfera);
+        }
     });
 }
 
-// Scroll to the bottom of the page
-window.onload = criarTrilha;
-
-function verificarResposta(respostaCorreta, nivel, esfera) {
-    const respostaSelecionada = document.querySelector('input[name="resposta"]:checked');
-    if (!respostaSelecionada) {
-        alert('Por favor, selecione uma resposta.');
-        return;
+async function verificarResposta(respostaCorreta, respostaSelecionada, nivel, esfera) {
+    const resultado = respostaSelecionada === respostaCorreta ? 'Resposta correta!' : 'Resposta incorreta.';
+    
+    const user = auth.currentUser;
+    if (user && respostaSelecionada === respostaCorreta) {
+        try {
+            const userRef = db.collection('users').doc(user.uid);
+            const userDoc = await userRef.get();
+            const userData = userDoc.data();
+            
+            const subject = document.getElementById('subject-title').textContent;
+            const assunto = esfera.dataset.assunto;
+            
+            if (!userData.trilhas) {
+                userData.trilhas = {};
+            }
+            if (!userData.trilhas[subject]) {
+                userData.trilhas[subject] = {};
+            }
+            
+            const nivelAtual = userData.trilhas[subject][assunto] || 0;
+            if (nivel > nivelAtual) {
+                await userRef.update({
+                    [`trilhas.${subject}.${assunto}`]: nivel
+                });
+                console.log(`Progresso atualizado para ${subject} - ${assunto}: ${nivel}`);
+                
+                // Atualiza o nível exibido no quadrado
+                const quadrado = document.querySelector(`.quadrado:contains('${assunto}')`);
+                if (quadrado) {
+                    quadrado.innerHTML = `${assunto}<br>Nível: ${nivel}`;
+                }
+            }
+        } catch (error) {
+            console.error("Erro ao atualizar progresso da trilha:", error);
+        }
     }
-
-    const opcoes = document.querySelectorAll('input[name="resposta"]');
-    opcoes.forEach(opcao => {
-        opcao.disabled = true;
-        const label = opcao.nextElementSibling;
-        if (opcao.value === respostaCorreta) {
-            label.style.color = 'green';
-        } else if (opcao === respostaSelecionada) {
-            label.style.color = 'red';
+    
+    Swal.fire({
+        title: resultado,
+        text: respostaSelecionada === respostaCorreta ? 'Parabéns! Você completou este nível.' : 'Tente novamente!',
+        icon: respostaSelecionada === respostaCorreta ? 'success' : 'error',
+        confirmButtonText: 'OK'
+    }).then(() => {
+        if (respostaSelecionada === respostaCorreta) {
+            marcarEsferaRespondida(esfera);
+            desbloquearProximaEsfera(nivel, esfera.dataset.assunto);
         }
     });
+}
 
-    const resultado = respostaSelecionada.value === respostaCorreta ? 'Resposta correta!' : 'Resposta incorreta.';
-    modalTexto.innerHTML += `<p>${resultado}</p>`;
-
-    document.getElementById('confirmarResposta').disabled = true;
-
-    if (respostaSelecionada.value === respostaCorreta) {
-        desbloquearProximaEsfera(nivel, esfera.dataset.assunto);
-        modalTexto.innerHTML += `<p>Parabéns! Você desbloqueou o próximo nível.</p>`;
-    }
-
-    // Remove the setTimeout here
-    // Add a close button instead
-    modalTexto.innerHTML += `<button class="btn btn-secondary mt-3" onclick="fecharModal()">Fechar</button>`;
+function marcarEsferaRespondida(esfera) {
+    esfera.classList.remove('desbloqueada');
+    esfera.classList.add('respondida');
+    esfera.textContent = ''; // Remove o número
 }
 
 function desbloquearProximaEsfera(nivel, assunto) {
@@ -187,13 +300,13 @@ function desbloquearProximaEsfera(nivel, assunto) {
         const proximaEsfera = esferas[indexAtual + 1];
         proximaEsfera.classList.remove('bloqueada');
         proximaEsfera.classList.add('desbloqueada');
-        nivelAtual = parseInt(proximaEsfera.dataset.nivel);
     } else {
-        // Verificar se todas as esferas foram desbloqueadas
         const todasEsferas = document.querySelectorAll('.esfera');
-        const todasDesbloqueadas = Array.from(todasEsferas).every(esfera => esfera.classList.contains('desbloqueada'));
+        const todasRespondidas = Array.from(todasEsferas).every(esfera => 
+            esfera.classList.contains('respondida') || esfera.classList.contains('desbloqueada')
+        );
         
-        if (todasDesbloqueadas) {
+        if (todasRespondidas) {
             const trofeu = document.querySelector('.trofeu');
             trofeu.classList.remove('bloqueado');
             trofeu.classList.add('desbloqueado');
@@ -201,21 +314,52 @@ function desbloquearProximaEsfera(nivel, assunto) {
     }
 }
 
-// Adicione esta função para fechar o modal
-function fecharModal() {
-    modal.hide();
-}
-
 function mostrarMensagemFinal() {
     if (this.classList.contains('desbloqueado')) {
-        modalTexto.innerHTML = `
-            <h3>Parabéns!</h3>
-            <p>Você completou todos os módulos da Trilha Educacional de Matemática!</p>
-            <p>Continue explorando e aprendendo mais!</p>
-            <button class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>
-        `;
-        modal.show();
+        Swal.fire({
+            title: 'Parabéns!',
+            text: 'Você completou todos os módulos da Trilha Educacional!',
+            icon: 'success',
+            confirmButtonText: 'Fechar'
+        });
     } else {
-        alert('Complete todos os módulos para desbloquear o troféu!');
+        Swal.fire({
+            title: 'Bloqueado',
+            text: 'Complete todos os módulos para desbloquear o troféu!',
+            icon: 'warning',
+            confirmButtonText: 'OK'
+        });
+    }
+}
+
+async function iniciarQuestao(event, subject, assunto, numeroEsfera) {
+    const esfera = event.target;
+    
+    if (esfera.classList.contains('bloqueada')) {
+        Swal.fire('Bloqueado', 'Complete os níveis anteriores primeiro.', 'warning');
+        return;
+    }
+
+    if (esfera.classList.contains('respondida')) {
+        Swal.fire('Nível Completo', 'Você já completou este nível!', 'info');
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://localhost:3000/${encodeURIComponent(subject)}/${encodeURIComponent(assunto)}/questoes`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const questoes = await response.json();
+
+        if (questoes.length > 0) {
+            const questaoAleatoria = questoes[Math.floor(Math.random() * questoes.length)];
+            mostrarQuestao(questaoAleatoria, numeroEsfera, esfera);
+        } else {
+            Swal.fire('Erro', 'Não há questões disponíveis para este assunto.', 'error');
+        }
+    } catch (error) {
+        console.error('Erro ao carregar a questão:', error);
+        Swal.fire('Erro', 'Não foi possível carregar a questão. Por favor, tente novamente.', 'error');
     }
 }
