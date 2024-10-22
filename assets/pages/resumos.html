@@ -1,20 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trilha Educacional - Questões</title>
-    <link rel="stylesheet" href="../styles/trilha.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/spinkit/2.0.1/spinkit.min.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/css/all.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-eHScC+dGte+Es4snK8b3U5Fb68ebkVVDZj9Y+hKc3DU2kLr1cd7wQ+xyqU6+nBvZ2dfBjbOwbLOj/sUJbn09FQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <title>Trilha Educacional - Resumos</title>
+    <style>
+        .materia, .assunto {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .materia:hover, .assunto:hover {
+            background-color: #f0f0f0;
+        }
+        .voltar-button {
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .voltar-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <header>
         <div class="logo-3bar">
             <i class="fa-solid fa-bars" id="menu-toggle"></i>
-            <a href="./main.html"><img src="../images/trilha-logo.png" alt="Logo" id="logo"></a>
+            <img src="../images/trilha-logo.png" alt="Logo" id="logo">
             <p>Trilha Educacional</p>
         </div>
         <nav class="nav-header">
@@ -39,7 +64,7 @@
                     </a>
                 </li>
                 <li class="option">
-                    <a href="./main.html">
+                    <a href="./trilha.html">
                         <i class="fa-solid fa-book-open"></i>
                         <span>Trilhas</span>
                     </a>
@@ -65,26 +90,23 @@
             </ul>
         </div>
         <div class="content" id="content">
-            <h1 id="subject-title"></h1>
-            <div id="trilha-container"></div>
-            <div id="modal" class="modal">
-                <div class="modal-content">
-                    <h2 id="modal-title"></h2>
-                    <p id="modal-text"></p>
-                </div>
-            </div>
-    </div>
+            <h1>Resumos</h1>
+            <div id="materias-container"></div>
+        </div>
     </main>
-    <div class="loading-modal" id="loadingModal">
+    
+    <!-- Modal de Carregamento -->
+    <div class="loading-modal" id="loadingModal" style="display: none;">
         <div class="sk-chase">
-          <div class="sk-chase-dot"></div>
-          <div class="sk-chase-dot"></div>
-          <div class="sk-chase-dot"></div>
-          <div class="sk-chase-dot"></div>
-          <div class="sk-chase-dot"></div>
-          <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
         </div>
     </div>
+
     <script>
         document.getElementById('menu-toggle').addEventListener('click', function() {
             const navBarLeft = document.getElementById('nav-bar-left');
@@ -92,15 +114,8 @@
             
             const content = document.querySelector('.content');
         });
-
-        document.querySelectorAll('.subject').forEach(subject => {
-            subject.addEventListener('click', function() {
-                const subjectName = this.dataset.subject || this.querySelector('p').textContent;
-                console.log(subjectName);
-                window.location.href = `trilha.html?subject=${encodeURIComponent(subjectName)}`;
-            });
-        });
-    </script>  
-    <script type="module" src="../scripts/trilha.js"></script>
+    </script>
+    <script type="module" src="../scripts/resumos.js"></script>
 </body>
 </html>
+
