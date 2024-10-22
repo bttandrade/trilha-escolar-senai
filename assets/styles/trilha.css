@@ -1,4 +1,5 @@
 :root {
+    /* Cores principais */
     --color-primary: #D17B13;
     --color-secondary: #10375C;
     --color-tertiary: #f1c40f;
@@ -7,19 +8,230 @@
     --color-senary: #4CAF50;
     --color-text-light: #ffffff;
     --color-text-dark: #333333;
+
+    /* Cores adicionais */
+    --orange: #EB8317;
+    --darkblue: #10375C;
+    --yellow: #F3C623;
+    --white: #F4F6FF;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Helvetica, sans-serif;
+    font-weight: 100;
+    user-select: none;
 }
 
 body {
-    min-height: 100vh;
+    background-color: var(--white);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
+    align-items: center; /* Alinhamento central */
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+body.swal2-height-auto{
+    height: 100vh !important;
+}
+
+/* Header */
+header {
+    display: flex;
+    width: 100%;
+    height: 10%;
+    background-color: var(--orange);
+    justify-content: space-between;
     align-items: center;
 }
 
+.logo-3bar {
+    padding-left: 1.5rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 1.5rem;
+    color: white;
+    gap: 0.5rem;  
+}
+
+#logo {
+    height: 70px;
+    width: 90px;
+}
+
+#email-div {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+#email-div i {
+    font-size: 2.5rem;
+}
+
+#logout {
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.logo-3bar img {
+    width: 40%;
+    height: auto;
+}
+
+.logo-3bar i {
+    cursor: pointer;
+}
+
+.nav-header {
+    width: 25%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 1rem;
+    color: white;
+}
+
+.nav-header i {
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+/* Main */
+main {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+/* Ajuste do conteúdo */
+.content {
+    overflow-y: auto;
+    width: 95vw; 
+    padding: 20px;
+    transition: width 0.3s ease-in-out;
+    margin-bottom: 4.5rem;
+    margin-left: 2.5rem;
+}
+
+.content.collapsed {
+    width: 85vw;
+}
+
+/* Barra lateral */
+.nav-bar-left {
+    height: 93vh;
+    width: 15vw; 
+    display: flex;
+    flex-direction: column;
+    background-color: var(--darkblue);
+    transition: width 0.3s ease-in-out;
+    overflow: hidden;
+}
+
+.nav-bar-left.collapsed {
+    width: 5vw; 
+}
+
+.nav-bar-left ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.nav-bar-left a {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    text-decoration: none;
+    color: var(--white);
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+    border-bottom: 2px solid var(--white);
+}
+
+.nav-bar-left.collapsed a span {
+    opacity: 0;
+    width: 0;
+    transition: opacity 0.3s ease, width 0.3s ease;
+}
+
+.nav-bar-left a span {
+    margin-left: 10px;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.nav-bar-left a:hover {
+    background-color: var(--orange);
+}
+
+.nav-bar-left a i {
+    font-size: 2rem;
+    transition: transform 0.3s ease;
+}
+
+.nav-bar-left.collapsed a i {
+    margin-right: 0;
+}
+
+.nav-bar-left a:hover i {
+    transform: scale(1.1);
+}
+
+/* Opções da barra lateral */
+.option {
+    width: 100%;
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border-bottom: 1px solid var(--gray);
+    transition: background-color 0.3s ease;
+}
+
+.option i {
+    font-size: 1.8rem;
+}
+
+.option span {
+    font-size: 1rem;
+}
+
+/* Quadrados e Esferas */
+.container {
+    display: flex;
+    flex-direction: column; /* Para centralizar verticalmente */
+    justify-content: center; /* Centralizar verticalmente */
+    align-items: center; /* Centralizar horizontalmente */
+    height: 100%; /* Altura total do contêiner */
+}
+#trilha-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    text-align: center;
+}
+#subject-title {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
 .quadrado {
     width: 100px;
     height: 100px;
+    padding: 60px;
     background-color: var(--color-primary);
     color: var(--color-text-light);
     display: flex;
@@ -31,10 +243,6 @@ body {
     font-weight: bold;
     border-radius: 10px;
     transition: transform 0.3s ease;
-}
-
-.quadrado:hover {
-    transform: scale(1.05);
 }
 
 .quadrado.bloqueado {
@@ -54,7 +262,6 @@ body {
 
 .quadrado.desbloqueado {
     background-color: var(--color-primary);
-    cursor: pointer;
 }
 
 .quadrado.desbloqueado::after {
@@ -115,10 +322,6 @@ body {
     cursor: pointer;
 }
 
-.esfera.desbloqueada::after {
-    content: none;
-}
-
 .esfera.respondida {
     background-color: var(--color-tertiary);
     cursor: default;
@@ -136,11 +339,7 @@ body {
     color: var(--color-text-light);
 }
 
-.quadrado, .esfera {
-    position: relative;
-    z-index: 2;
-}
-
+/* Modal */
 .modal-dialog {
     z-index: 1050; 
 }
@@ -193,50 +392,37 @@ body {
     color: white;
     border: none;
 }
-
-.trofeu {
-    font-size: 3.5rem;
-    color: #858585;
-    background-color: var(--color-quinary);
-    z-index: 2;
+.loading-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(0, 0, 0); /* Fundo semi-transparente */
+    z-index: 1000; /* Para ficar por cima de outros elementos */
+  }
+/* Animações */
+@keyframes slideIn {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
-.trofeu.bloqueado {
-    cursor: not-allowed;
-}
-
-.trofeu.desbloqueado {
-    cursor: pointer;
-    color: var(--color-tertiary);
-}
-
-.trofeu:hover {
-    transform: scale(1.1);
-}
-
-/* Estilos para o modal de questões */
-.swal2-popup {
-    font-size: 16px;
-}
-
-.swal2-title {
-    font-size: 24px;
-    color: var(--color-primary);
-}
-
-.swal2-html-container {
-    text-align: left;
-}
-
-.swal2-confirm {
-    background-color: var(--color-primary) !important;
-}
-
-.swal2-cancel {
-    background-color: var(--color-quinary) !important;
-}
-
-#subject-title {
-    text-align: center;
-    margin-bottom: 20px;
+@keyframes slideOut {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
 }

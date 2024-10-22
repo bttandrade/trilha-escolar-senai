@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trilha Educacional</title>
     <link rel="stylesheet" href="./assets/styles/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-eHScC+dGte+Es4snK8b3U5Fb68ebkVVDZj9Y+hKc3DU2kLr1cd7wQ+xyqU6+nBvZ2dfBjbOwbLOj/sUJbn09FQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 </head>
 <body>
@@ -75,19 +76,7 @@
             </div>
             <button id="overlayBtn"></button>
         </div>
-    </div>
-    <script>
-        document.getElementById('register-opt').addEventListener('click', () => {
-              document.getElementById('login-form').classList.remove('active');  // Esconde o formulário de login
-              document.getElementById('register-form').classList.add('active');  // Mostra o formulário de registro
-          });
-  
-          document.getElementById('login-opt-register').addEventListener('click', () => {
-              document.getElementById('register-form').classList.remove('active');  // Esconde o formulário de registro
-              document.getElementById('login-form').classList.add('active');  // Mostra o formulário de login
-          });
-  
-      </script>
-      <script type="module" src="./assets/scripts/index.js"></script>
+    </div> 
+    <script type="module" src="./assets/scripts/index.js"></script>
 </body>
 </html>

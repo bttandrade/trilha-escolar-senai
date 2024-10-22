@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trilha Educacional - Questões</title>
+    <link rel="stylesheet" href="../styles/trilha.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/spinkit/2.0.1/spinkit.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-eHScC+dGte+Es4snK8b3U5Fb68ebkVVDZj9Y+hKc3DU2kLr1cd7wQ+xyqU6+nBvZ2dfBjbOwbLOj/sUJbn09FQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header>
+        <div class="logo-3bar">
+            <i class="fa-solid fa-bars" id="menu-toggle"></i>
+            <a href="./main.html"><img src="../images/trilha-logo.png" alt="Logo" id="logo"></a>
+            <p>Trilha Educacional</p>
+        </div>
+        <nav class="nav-header">
+            <div id="email-div">
+                <i class="fa-solid fa-user-circle"></i>
+                <p id="user-email"></p>
+                <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class="logout">
+                <i class="fa-solid fa-right-from-bracket" id="logout"></i>
+            </div>
+        </nav>
+    </header>
+    
+    <main>
+        <div class="nav-bar-left" id="nav-bar-left">
+            <ul class="menu">
+                <li class="option">
+                    <a href="#">
+                        <i class="fa-solid fa-id-card"></i>
+                        <span>Perfil</span>
+                    </a>
+                </li>
+                <li class="option">
+                    <a href="./main.html">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>Trilhas</span>
+                    </a>
+                </li>
+                <li class="option">
+                    <a href="#">
+                        <i class="fa-solid fa-flag"></i>
+                        <span>Resumos</span>
+                    </a>
+                </li>
+                <li class="option">
+                    <a href="#">
+                        <i class="fa-solid fa-check-square"></i>
+                        <span>Questões</span>
+                    </a>
+                </li>
+                <li class="option">
+                    <a href="#">
+                        <i class="fa-solid fa-star"></i>
+                        <span>Planos</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="content" id="content">
+            <h1 id="subject-title"></h1>
+            <div id="trilha-container"></div>
+            <div id="modal" class="modal">
+                <div class="modal-content">
+                    <h2 id="modal-title"></h2>
+                    <p id="modal-text"></p>
+                </div>
+            </div>
+    </div>
+    </main>
+    <div class="loading-modal" id="loadingModal">
+        <div class="sk-chase">
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const navBarLeft = document.getElementById('nav-bar-left');
+            navBarLeft.classList.toggle('collapsed');
+            
+            const content = document.querySelector('.content');
+        });
+
+        document.querySelectorAll('.subject').forEach(subject => {
+            subject.addEventListener('click', function() {
+                const subjectName = this.dataset.subject || this.querySelector('p').textContent;
+                console.log(subjectName);
+                window.location.href = `trilha.html?subject=${encodeURIComponent(subjectName)}`;
+            });
+        });
+    </script>  
+    <script type="module" src="../scripts/trilha.js"></script>
+</body>
+</html>

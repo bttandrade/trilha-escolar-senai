@@ -1,4 +1,6 @@
 import { db, auth} from '../firebase/firebase_fe.js';
+import { checkAuthStatus, logout } from "../firebase/firebase_function_fe.js";
+import { confirmNotificacao  } from "./alerts.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -9,6 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
         criarTrilha(subject);
     }
 });
+// Carregamento
+function showLoading() {
+    document.getElementById('loadingModal').style.display = 'flex';
+  }
+
+  // Ocultar o modal de loading
+  function hideLoading() {
+    document.getElementById('loadingModal').style.display = 'none';
+  }
 
 async function criarTrilha(subject) {
     const trilhaContainer = document.getElementById('trilha-container');
@@ -16,6 +27,7 @@ async function criarTrilha(subject) {
 
     try {
         // Fetch subjects from Firestore
+        showLoading();
         const subjectsSnapshot = await db.collection(subject).get();
         const assuntos = subjectsSnapshot.docs.map(doc => doc.id);
 
@@ -67,6 +79,7 @@ async function criarTrilha(subject) {
         trofeu.innerHTML = '<i class="fa-solid fa-award"></i>';
         trofeu.addEventListener('click', mostrarMensagemFinal);
         trilhaContainer.appendChild(trofeu);
+        hideLoading();
     } catch (error) {
         console.error('Erro ao carregar os assuntos:', error);
         Swal.fire('Erro', 'Não foi possível carregar os assuntos. Por favor, tente novamente.', 'error');
@@ -81,6 +94,7 @@ async function abrirModalAssunto(assunto, subject) {
     console.log(assunto, subject);
     if (user) {
         try {
+            showLoading();
             const userDoc = await db.collection('users').doc(user.uid).get();
             const userData = userDoc.data();
             const nivelAtual = userData.trilhas && userData.trilhas[subject] && userData.trilhas[subject][assunto] ? userData.trilhas[subject][assunto] : 0;
@@ -105,6 +119,7 @@ async function abrirModalAssunto(assunto, subject) {
                 heightAuto: false,
                 didOpen: () => {
                     // Adicionar CSS personalizado ao modal
+                    
                     const style = document.createElement('style');
                     style.innerHTML = `
                         .pdf-modal {
@@ -127,6 +142,7 @@ async function abrirModalAssunto(assunto, subject) {
                         }
                     `;
                     document.head.appendChild(style);
+                    hideLoading();
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -363,3 +379,29 @@ async function iniciarQuestao(event, subject, assunto, numeroEsfera) {
         Swal.fire('Erro', 'Não foi possível carregar a questão. Por favor, tente novamente.', 'error');
     }
 }
+
+
+//Firebase
+
+document.getElementById('logout').addEventListener('click', async () => {
+    if(await confirmNotificacao('Tem certeza que deseja sair?', 'Deslogar', 'Obrigado, até a proxima!', 'Obrigado por continuar com a gente!')) {
+        logout();
+    }
+})
+
+// check auth
+async function verificarUser(){
+    const uid = await checkAuthStatus();
+    console.log(uid);
+    if (uid) {
+        db.collection('users').doc(uid).get().then((doc) => {
+            if (doc.exists) {
+                const user = doc.data();
+                document.getElementById('user-email').innerHTML = user.email;
+            }else{
+                console.log('user not found');
+            }
+        })
+    }
+}
+verificarUser();
