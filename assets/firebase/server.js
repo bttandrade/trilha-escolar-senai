@@ -8,12 +8,19 @@ aplicacaoExpress.use(express.json());
 // middleware CORS
 aplicacaoExpress.use(cors());
 
-// restringir a uma origem específica:
-aplicacaoExpress.use(cors({
-  origin: 'http://127.0.0.1:5501'
-}));
-
 const materiasValidas = ['Matemática', 'Português', 'Matemática e suas tecnologias'];
+
+// Rota para obter todas as matérias (porquisse do caralho)
+aplicacaoExpress.get('/materias', async (req, res) => {
+    try {
+        // Aqui você pode definir as matérias válidas diretamente
+        const materias = ['Matemática', 'Português', 'Matemática e suas tecnologias'];
+        res.json(materias);
+    } catch (erro) {
+        console.error("Erro ao buscar matérias:", erro);
+        res.status(500).json({ erro: "Erro ao buscar matérias" });
+    }
+});
 
 // Rota para obter todos os assuntos de uma matéria
 aplicacaoExpress.get('/:materia/assuntos', async (req, res) => {
