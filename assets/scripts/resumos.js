@@ -82,20 +82,28 @@ async function carregarAssuntos(materia) {
     }
 }
 
+// Função para abrir o PDF
 async function abrirPdf(materia, assunto) {
     try {
         showLoading();
-        const response = await fetch(`http://localhost:3000/${encodeURIComponent(materia)}/${encodeURIComponent(assunto)}/pdf`);
+        console.log('Assunto recebido:', assunto);
+        console.log('Matéria recebida:', materia);
+
+        // Monta a URL para acessar o PDF
+        const pdfUrl = `http://localhost:3000/${materia}/${assunto}/pdf`;
+
+        const response = await fetch(pdfUrl);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const pdfUrl = await response.json();
-        window.open(pdfUrl, '_blank'); // Abre o PDF em uma nova aba
-        hideLoading();
+
+        // Abre o PDF em uma nova aba
+        window.open(pdfUrl, '_blank');
+
     } catch (error) {
         console.error('Erro ao carregar o PDF:', error);
         Swal.fire('Erro', 'Não foi possível carregar o PDF. Por favor, tente novamente.', 'error');
+    } finally {
         hideLoading();
     }
 }
-
