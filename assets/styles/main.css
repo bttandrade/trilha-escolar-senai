@@ -3,15 +3,18 @@
     --darkblue: #10375C;
     --yellow: #F3C623;
     --white: #F4F6FF;
+    --light-gray: #e0e4f1;
+    --shadow-color: rgba(0, 0, 0, 0.1);
 }
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: Helvetica, sans-serif;
+    font-family: 'Helvetica', sans-serif;
     font-weight: 100;
     user-select: none;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 body {
@@ -26,7 +29,6 @@ body {
     margin: 0;
 }
 
-/* header */
 header {
     display: flex;
     width: 100%;
@@ -34,93 +36,89 @@ header {
     background-color: var(--orange);
     justify-content: space-between;
     align-items: center;
+    padding: 0 1.5rem;
+    box-shadow: 0 4px 8px var(--shadow-color);
 }
 
 .logo-3bar {
-    padding-left: 1.5rem;
-    width: auto;
-    height: 100%;
     display: flex;
-    justify-content: space-around;
-    font-size: 1.5rem;
-    color: white;
     align-items: center;
-    gap: 0.5rem;  
-    background-color: var(--orange);
-}
-#logo{
-    height: 70px;
-    width: 90px;
+    font-size: 1.5rem;
+    color: var(--white);
+    gap: 0.5rem;
 }
 
-#email-div{
-    display: flex;
-    gap: 1.5rem;
-    align-items: center;
-}
-#email-div i {
-    font-size: 2.5rem;
-}
-#logout {
-    cursor: pointer;
-    font-size: 1.5rem;
-}
-.logo-3bar img {
-    width: 40%;
-    height: auto;
+#logo {
+    height: 60px;
+    width: 80px;
 }
 
-.logo-3bar i {
-    cursor: pointer;
+#email-div {
+    display: flex;
+    align-items: center;
+    color: var(--white);
+    font-size: 1rem;
 }
+
+#user-email {
+    margin: 0 5px;
+    font-weight: 600;
+}
+
+.logout {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.logout:hover {
+    transform: scale(1.1);
+}
+
 
 .nav-header {
-    width: 25%;
-    height: 100%;
     display: flex;
-    justify-content: space-around;
     align-items: center;
-    font-size: 1rem;
-    color: white;
+    gap: 1.5rem;
 }
 
 .nav-header i {
+    font-size: 2rem;
+    color: var(--white);
     cursor: pointer;
-    font-size: 1.2rem;
 }
+
 main {
     display: flex;
     width: 100%;
-    height: 100%;
+    height: 90%;
 }
 
-/* Ajustar o conteúdo para ocupar o restante do espaço ao lado da barra lateral */
 .content {
     overflow-y: auto;
-    width: 95vw; 
-    padding: 20px;
-    transition: width 0.3s ease-in-out; /* Adiciona uma transição suave */
+    width: 85vw;
+    padding: 2rem;
+    transition: width 0.3s ease-in-out;
     margin-bottom: 4.5rem;
     margin-left: 2.5rem;
 }
 
 .content.collapsed {
-    width: 85vw;
+    width: 95vw;
 }
 
-/* Barra lateral */
 .nav-bar-left {
     height: 93vh;
-    width: 15vw; /* Largura padrão */
+    width: 15vw;
     display: flex;
     flex-direction: column;
     background-color: var(--darkblue);
     transition: width 0.3s ease-in-out;
     overflow: hidden;
+    box-shadow: 2px 0 8px var(--shadow-color);
 }
 
 .nav-bar-left.collapsed {
-    width: 5vw; /* Largura colapsada */
+    width: 5vw;
 }
 
 .nav-bar-left ul {
@@ -134,18 +132,18 @@ main {
     width: 100%;
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 15px 10px;
     text-decoration: none;
     color: var(--white);
-    transition: background-color 0.3s ease;
-    border-radius: 5px;
-    border-bottom: 2px solid var(--white);
+    font-size: 1rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 8px;
+    margin: 5px 0;
 }
 
-.nav-bar-left.collapsed a span {
-    opacity: 0;
-    width: 0;
-    transition: opacity 0.3s ease, width 0.3s ease;
+.nav-bar-left a:hover {
+    background-color: var(--orange);
+    color: var(--white);
 }
 
 .nav-bar-left a span {
@@ -154,53 +152,34 @@ main {
     transition: opacity 0.3s ease;
 }
 
-.nav-bar-left a:hover {
-    background-color: var(--orange);
+.nav-bar-left.collapsed a span {
+    opacity: 0;
+    width: 0;
+    transition: opacity 0.3s ease, width 0.3s ease;
 }
 
-.nav-bar-left a i {
-    font-size: 2rem;
-    transition: transform 0.3s ease;
-}
-
-.nav-bar-left.collapsed a i {
-    margin-right: 0;
-}
-
-.nav-bar-left a:hover i {
-    transform: scale(1.1);
-}
-
-/* Opções da barra lateral */
 .option {
-    width: 100%;
     padding: 10px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    border-bottom: 1px solid var(--gray);
     transition: background-color 0.3s ease;
+    color: var(--light-gray);
 }
 
-.option i {
-    font-size: 1.8rem;
-}
-
-.option span {
-    font-size: 1rem;
-}
-
-/* Adição da seção de matérias */
 .category h2 {
-    font-size: 1.8em;
+    font-size: 2em;
+    color: var(--darkblue);
     margin-bottom: 10px;
+    font-weight: bold;
+    border-left: 5px solid var(--orange);
+    padding-left: 10px;
 }
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 250px));
-    gap: 4rem;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem;
     margin-bottom: 40px;
 }
 
@@ -208,31 +187,90 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    width: 17em;
-    height: 17em;
+    justify-content: space-between;
+    padding: 1.5rem;
+    width: 100%;
+    height: 15rem;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    background-color: #fff;
+    background-color: var(--white);
+    color: var(--darkblue);
+    border-radius: 8px;
+    box-shadow: 0 4px 10px var(--shadow-color);
+    transition: transform 0.3s ease, background-color 0.3s ease;
     cursor: pointer;
 }
 
 .subject:hover {
     transform: translateY(-5px);
+    background-color: var(--light-gray);
 }
 
 .subject p {
-    font-size: 1rem;
+    font-size: 1.2rem;
     color: var(--orange);
     font-weight: bold;
 }
 
 .subject i {
-    font-size: 9rem;
+    font-size: 4rem;
     color: var(--darkblue);
 }
 
+@media (max-width: 768px) {
+    .nav-bar-left {
+        width: 60vw; 
+    }
+
+    .content {
+        width: 100vw; 
+        margin-left: 0; 
+    }
+
+    .nav-bar-left.collapsed {
+        width: 0; 
+    }
+    
+    .nav-header {
+        flex-direction: column; 
+        align-items: flex-start; 
+    }
+
+    #email-div {
+        margin-top: 10px; 
+    }
+
+    .nav-header i {
+        font-size: 1.5rem; 
+    }
+
+    .category h2 {
+        font-size: 1.5em;
+    }
+
+    .grid-container {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
+    }
+
+    .subject {
+        height: auto; 
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-bar-left {
+        width: 80vw; 
+    }
+
+    .nav-header {
+        flex-direction: column; 
+    }
+
+    #logo {
+        height: 50px; 
+        width: 60px; 
+    }
+
+    .nav-header i {
+        font-size: 1.2rem; 
+    }
+}
