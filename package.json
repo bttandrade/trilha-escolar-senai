@@ -4,11 +4,11 @@
     "express": "^4.21.1",
     "firebase": "^10.14.1",
     "firebase-admin": "^12.6.0",
-    "i": "^0.3.7"
+    "i": "^0.3.7",
+    "stripe": "^17.2.1"
   },
   "type": "module",
-  "scripts":
-  {
+  "scripts": {
     "start": "node ./assets/firebase/server.js"
   }
 }

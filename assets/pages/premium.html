@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planos de Assinatura</title>
+    <link rel="stylesheet" href="../styles/premium.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <header>
+        <div class="logo-3bar">
+            <i class="fa-solid fa-bars" id="menu-toggle"></i>
+            <img src="../images/trilha-logo.png" alt="Logo" id="logo">
+            <p>Trilha Educacional</p>
+        </div>
+        <nav class="nav-header">
+            <div id="email-div">
+                <i class="fa-solid fa-user-circle"></i>
+                <p id="user-email"></p>
+                <i class="fa-solid fa-caret-down"></i>
+            </div>
+            <div class="logout">
+                <i class="fa-solid fa-right-from-bracket" id="logout"></i>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="nav-bar-left" id="nav-bar-left">
+            <ul class="menu">
+                <li class="option">
+                    <a href="#">
+                        <i class="fa-solid fa-id-card"></i>
+                        <span>Perfil</span>
+                    </a>
+                </li>
+                <li class="option">
+                    <a href="#">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>Trilhas</span>
+                    </a>
+                </li>
+                <li class="option">
+                    <a href="resumos.html">
+                        <i class="fa-solid fa-flag"></i>
+                        <span>Resumos</span>
+                    </a>
+                </li>
+                <li class="option">
+                    <a href="exercicios.html">
+                        <i class="fa-solid fa-check-square"></i>
+                        <span>Questões</span>
+                    </a>
+                </li>
+                <li class="option">
+                    <a href="#">
+                        <i class="fa-solid fa-star"></i>
+                        <span>Planos</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="content" id="content">
+            <div class="container">
+                <h1>Escolha o seu Plano</h1>
+                <div class="plans">
+                    <div class="plan basic">
+                        <h2>Plano Free</h2>
+                        <p class="price">Gratuito</p>
+                        <ul>
+                            <li>Trilhas gratuitas</li>
+                            <li>Acesso a resumos</li>
+                            <li>Rever questões</li>
+                        </ul>
+                        <button onclick="redirectToCheckout('Gratuito', 0)">Assinar</button>
+                    </div>
+                    
+                    <div class="plan intermediate">
+                        <h2>Plano Premium</h2>
+                        <p class="price">R$59<span>/mês</span></p>
+                        <ul>
+                            <li>Todas as funcionalidades do Básico</li>
+                            <li>Correção da Redação com IA</li>
+                            <li>Ter acesso a resoluções das questões</li>
+                        </ul>
+                        <button onclick="redirectToCheckout('Premium', 59)">Assinar</button>
+                    </div>
+                </div>
+            </div>
+    </main>
+    <script>
+        const stripe = Stripe('pk_test_51QEbBwJJV2N8fWL1zG2QtGGq5AfwxWeIataXmcYS7Gcvkq97PpxvgHYPTfaIQFZr5E0gjR4psg41XC5fBzBcc9Bl00PwKF7T9h');
+
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const navBarLeft = document.getElementById('nav-bar-left');
+            navBarLeft.classList.toggle('collapsed');
+            
+            const content = document.querySelector('.content');
+            content.classList.toggle('collapsed');
+        });
+
+        function redirectToCheckout(planName, planPrice) {
+            fetch('http://localhost:3000/create-checkout-session', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ planName, planPrice })
+            })
+            .then(response => response.json())
+            .then(session => {
+                return stripe.redirectToCheckout({ sessionId: session.id });
+            })
+            .then(result => {
+                if (result.error) {
+                    alert(result.error.message);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

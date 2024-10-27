@@ -11,7 +11,9 @@ export function createAccount(email, password, name) {
             email: email,
             xp: 0,
             level: 1,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            plano: 'Gratuito',
+            status_assinatura: false
         });
       })
     .then(() => {
