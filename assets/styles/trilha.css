@@ -401,10 +401,10 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(0, 0, 0); /* Fundo semi-transparente */
-    z-index: 1000; /* Para ficar por cima de outros elementos */
+    background-color: rgb(0, 0, 0); 
+    z-index: 1000; 
   }
-/* Animações */
+
 @keyframes slideIn {
     0% {
         transform: translateY(-100%);
