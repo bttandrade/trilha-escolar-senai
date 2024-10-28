@@ -1,0 +1,61 @@
+#materias-container {
+    padding: 20px;
+}
+
+/* Estilos para a matéria */
+.materia {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #4a4a4a; /* Cor do texto da matéria */
+    margin-bottom: 10px;
+    padding: 10px;
+    border-bottom: 2px solid #ccc; /* Linha separadora */
+}
+
+/* Estilos para os assuntos */
+.assuntos-container {
+    padding-left: 20px; /* Indentação para assuntos */
+    margin-bottom: 20px; /* Espaçamento abaixo do container de assuntos */
+}
+
+.assunto {
+    font-size: 1.2em;
+    color: #007BFF; /* Cor do texto dos assuntos */
+    cursor: pointer; /* Cursor de mão ao passar o mouse */
+    padding: 5px;
+    transition: background-color 0.3s; /* Transição suave */
+}
+
+.assunto:hover {
+    background-color: #f0f8ff; /* Cor de fundo ao passar o mouse */
+}
+
+/* Estilos para o botão de voltar */
+.voltar-button {
+    background-color: #6c757d; /* Cor do fundo do botão */
+    color: white; /* Cor do texto */
+    border: none;
+    border-radius: 5px; /* Bordas arredondadas */
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s; /* Transição suave */
+}
+
+.voltar-button:hover {
+    background-color: #5a6268; /* Cor ao passar o mouse */
+}
+
+/* Estilo do modal de carregamento */
+.loading-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Colocar acima de outros elementos */
+}

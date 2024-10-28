@@ -10,7 +10,7 @@ aplicacaoExpress.use(cors());
 
 const materiasValidas = ['Matemática', 'Português', 'Matemática e suas tecnologias'];
 
-// Rota para obter todas as matérias (porquisse do caralho)
+// Rota para obter todas as matérias
 aplicacaoExpress.get('/materias', async (req, res) => {
     try {
         // Aqui você pode definir as matérias válidas diretamente

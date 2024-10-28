@@ -26,13 +26,21 @@ async function carregarMaterias() {
             hideLoading();
             return;
         }
-        materias.forEach(materia => {
+
+        for (const materia of materias) {
             const materiaDiv = document.createElement('div');
             materiaDiv.textContent = materia;
             materiaDiv.className = 'materia';
-            materiaDiv.addEventListener('click', () => carregarAssuntos(materia)); // Carrega os assuntos ao clicar na matéria
             materiasContainer.appendChild(materiaDiv);
-        });
+
+            // Carrega os assuntos da matéria abaixo dela
+            const assuntosContainer = document.createElement('div');
+            assuntosContainer.className = 'assuntos-container';
+            materiasContainer.appendChild(assuntosContainer);
+
+            await carregarAssuntos(materia, assuntosContainer);
+        }
+
         hideLoading();
     } catch (error) {
         console.error('Erro ao carregar as matérias:', error);
@@ -41,10 +49,7 @@ async function carregarMaterias() {
     }
 }
 
-async function carregarAssuntos(materia) {
-    const materiasContainer = document.getElementById('materias-container');
-    materiasContainer.innerHTML = ''; // Limpa os assuntos anteriores
-
+async function carregarAssuntos(materia, assuntosContainer) {
     try {
         showLoading();
         const response = await fetch(`http://localhost:3000/${encodeURIComponent(materia)}/assuntos`);
@@ -58,22 +63,14 @@ async function carregarAssuntos(materia) {
             return;
         }
 
-        // Adiciona o botão de voltar
-        const voltarButton = document.createElement('button');
-        voltarButton.textContent = 'Voltar para Matérias';
-        voltarButton.className = 'voltar-button';
-        voltarButton.addEventListener('click', () => {
-            carregarMaterias(); // Chama a função para carregar as matérias novamente
-        });
-        materiasContainer.appendChild(voltarButton);
-
         assuntos.forEach(assunto => {
             const assuntoDiv = document.createElement('div');
             assuntoDiv.textContent = assunto;
             assuntoDiv.className = 'assunto';
             assuntoDiv.addEventListener('click', () => abrirPdf(materia, assunto)); // Abre o PDF ao clicar no assunto
-            materiasContainer.appendChild(assuntoDiv);
+            assuntosContainer.appendChild(assuntoDiv);
         });
+
         hideLoading();
     } catch (error) {
         console.error('Erro ao carregar os assuntos:', error);

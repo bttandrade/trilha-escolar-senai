@@ -1,15 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope&display=swap');
+
+/* Cores */
 :root {
     --orange: #EB8317;
     --darkblue: #10375C;
     --yellow: #F3C623;
     --white: #F4F6FF;
+    --light-gray: #f0f0f0;
+    --blue: #0056b3;
 }
 
+/* Estilo Global */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: Helvetica, sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-weight: 100;
     user-select: none;
 }
@@ -18,15 +24,14 @@ body {
     background-color: var(--white);
     display: flex;
     flex-direction: column;
-    justify-content: start;
-    align-items: start;
+    justify-content: flex-start;
+    align-items: flex-start;
     overflow: hidden;
     height: 100vh;
     width: 100vw;
-    margin: 0;
 }
 
-/* header */
+/* Header */
 header {
     display: flex;
     width: 100%;
@@ -34,37 +39,36 @@ header {
     background-color: var(--orange);
     justify-content: space-between;
     align-items: center;
+    padding: 0 1rem;
 }
 
 .logo-3bar {
-    padding-left: 1.5rem;
-    width: auto;
-    height: 100%;
     display: flex;
-    justify-content: space-around;
-    font-size: 1.5rem;
-    color: white;
     align-items: center;
-    gap: 0.5rem;  
-    background-color: var(--orange);
+    gap: 0.5rem;
+    color: white;
 }
-#logo{
+
+#logo {
     height: 70px;
     width: 90px;
 }
 
-#email-div{
+#email-div {
     display: flex;
     gap: 1.5rem;
     align-items: center;
 }
+
 #email-div i {
     font-size: 2.5rem;
 }
+
 #logout {
     cursor: pointer;
     font-size: 1.5rem;
 }
+
 .logo-3bar img {
     width: 40%;
     height: auto;
@@ -88,30 +92,18 @@ header {
     cursor: pointer;
     font-size: 1.2rem;
 }
+
+/* Main */
 main {
     display: flex;
     width: 100%;
     height: 100%;
 }
 
-/* Ajustar o conteúdo para ocupar o restante do espaço ao lado da barra lateral */
-.content {
-    overflow-y: auto;
-    width: 95vw; 
-    padding: 20px;
-    transition: width 0.3s ease-in-out; /* Adiciona uma transição suave */
-    margin-bottom: 4.5rem;
-    margin-left: 2.5rem;
-}
-
-.content.collapsed {
-    width: 85vw;
-}
-
-/* Barra lateral */
+/* Barra Lateral */
 .nav-bar-left {
     height: 93vh;
-    width: 15vw; /* Largura padrão */
+    width: 15vw; 
     display: flex;
     flex-direction: column;
     background-color: var(--darkblue);
@@ -120,7 +112,7 @@ main {
 }
 
 .nav-bar-left.collapsed {
-    width: 5vw; /* Largura colapsada */
+    width: 5vw; 
 }
 
 .nav-bar-left ul {
@@ -171,7 +163,7 @@ main {
     transform: scale(1.1);
 }
 
-/* Opções da barra lateral */
+/* Opções da Barra Lateral */
 .option {
     width: 100%;
     padding: 10px;
@@ -179,8 +171,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    border-bottom: 1px solid var(--gray);
-    transition: background-color 0.3s ease;
+    transition: 0.5s;
 }
 
 .option i {
@@ -191,16 +182,37 @@ main {
     font-size: 1rem;
 }
 
-/* Adição da seção de matérias */
+/* Conteúdo Principal */
+.content {
+    overflow-y: auto;
+    width: 95vw; 
+    padding: 20px;
+    transition: width 0.3s ease-in-out; /* Adiciona uma transição suave */
+    margin-bottom: 4.5rem;
+    margin-left: 2.5rem;
+}
+
+.content.collapsed {
+    width: 85vw;
+}
+
+/* Seções de Matérias */
+.category {
+    margin-bottom: 2rem; /* Espaçamento entre as seções */
+}
+
 .category h2 {
     font-size: 1.8em;
     margin-bottom: 10px;
+    color: var(--darkblue);
+    border-bottom: 2px solid var(--orange); /* Adiciona uma borda inferior */
+    padding-bottom: 5px; /* Espaçamento entre o título e a borda */
 }
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 250px));
-    gap: 4rem;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Ajusta o mínimo para 180px */
+    gap: 1rem; /* Espaçamento entre os cards */
     margin-bottom: 40px;
 }
 
@@ -208,31 +220,27 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    justify-content: center;
+    border-radius: 10px; /* Bordas mais arredondadas */
     padding: 20px;
-    width: 17em;
-    height: 17em;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    background-color: #fff;
+    background-color: var(--light-gray); /* Fundo claro para os cards */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: transform 0.3s, box-shadow 0.3s; /* Transições suaves */
     cursor: pointer;
 }
 
 .subject:hover {
-    transform: translateY(-5px);
+    transform: translateY(-5px); /* Levanta o card ao passar o mouse */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
 .subject p {
-    font-size: 1rem;
-    color: var(--orange);
-    font-weight: bold;
+    font-size: 1rem; /* Aumenta o tamanho da fonte */
+    color: var(--darkblue);
+    font-weight: bold; /* Mantém o texto em negrito */
 }
 
 .subject i {
-    font-size: 9rem;
-    color: var(--darkblue);
+    font-size: 3rem; /* Aumenta o tamanho do ícone */
+    color: var(--blue); /* Cor dos ícones */
 }
-

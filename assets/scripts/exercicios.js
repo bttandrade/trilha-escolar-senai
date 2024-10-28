@@ -16,7 +16,7 @@ async function carregarMaterias() {
 
     try {
         showLoading();
-        const response = await fetch('http://localhost:3000/materias'); // Chama a nova rota
+        const response = await fetch('http://localhost:3000/materias');
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -26,25 +26,30 @@ async function carregarMaterias() {
             hideLoading();
             return;
         }
-        materias.forEach(materia => {
+
+        for (const materia of materias) {
             const materiaDiv = document.createElement('div');
             materiaDiv.textContent = materia;
             materiaDiv.className = 'materia';
-            materiaDiv.addEventListener('click', () => carregarAssuntos(materia)); // Carrega os assuntos ao clicar na matéria
             materiasContainer.appendChild(materiaDiv);
-        });
-        hideLoading();
+
+            const assuntosContainer = document.createElement('div');
+            assuntosContainer.className = 'assuntos-container';
+            materiasContainer.appendChild(assuntosContainer);
+
+            // Carrega os assuntos da matéria
+            await carregarAssuntos(materia, assuntosContainer);
+        }
+
     } catch (error) {
         console.error('Erro ao carregar as matérias:', error);
         Swal.fire('Erro', 'Não foi possível carregar as matérias. Por favor, tente novamente.', 'error');
+    } finally {
         hideLoading();
     }
 }
 
-async function carregarAssuntos(materia) {
-    const materiasContainer = document.getElementById('materias-container');
-    materiasContainer.innerHTML = ''; // Limpa os assuntos anteriores
-
+async function carregarAssuntos(materia, assuntosContainer) {
     try {
         showLoading();
         const response = await fetch(`http://localhost:3000/${encodeURIComponent(materia)}/assuntos`);
@@ -54,30 +59,21 @@ async function carregarAssuntos(materia) {
         const assuntos = await response.json();
         if (assuntos.length === 0) {
             Swal.fire('Aviso', 'Nenhum assunto encontrado para esta matéria.', 'warning');
-            hideLoading();
             return;
         }
-
-        // Adiciona o botão de voltar
-        const voltarButton = document.createElement('button');
-        voltarButton.textContent = 'Voltar para Matérias';
-        voltarButton.className = 'voltar-button';
-        voltarButton.addEventListener('click', () => {
-            carregarMaterias(); // Chama a função para carregar as matérias novamente
-        });
-        materiasContainer.appendChild(voltarButton);
 
         assuntos.forEach(assunto => {
             const assuntoDiv = document.createElement('div');
             assuntoDiv.textContent = assunto;
             assuntoDiv.className = 'assunto';
-            assuntoDiv.addEventListener('click', () => abrirModalQuestao(materia, assunto)); // Abre o modal com a questão
-            materiasContainer.appendChild(assuntoDiv);
+            assuntoDiv.addEventListener('click', () => abrirModalQuestao(materia, assunto));
+            assuntosContainer.appendChild(assuntoDiv);
         });
-        hideLoading();
+
     } catch (error) {
         console.error('Erro ao carregar os assuntos:', error);
         Swal.fire('Erro', 'Não foi possível carregar os assuntos. Por favor, tente novamente.', 'error');
+    } finally {
         hideLoading();
     }
 }
@@ -96,10 +92,10 @@ async function abrirModalQuestao(materia, assunto) {
         } else {
             Swal.fire('Erro', 'Não há questões disponíveis para este assunto.', 'error');
         }
-        hideLoading();
     } catch (error) {
         console.error('Erro ao carregar a questão:', error);
         Swal.fire('Erro', 'Não foi possível carregar a questão. Por favor, tente novamente.', 'error');
+    } finally {
         hideLoading();
     }
 }
@@ -128,6 +124,9 @@ function mostrarQuestao(questao) {
                 return false;
             }
             return respostaSelecionada.value;
+        },
+        customClass: {
+            popup: 'swal2-popup'
         }
     }).then((result) => {
         if (result.isConfirmed) {

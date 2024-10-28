@@ -1,20 +1,21 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/main.css">
-    <link rel="stylesheet" href="../styles/css/all.css">
-    <link rel="stylesheet" href="../styles/resumos.css">
+    <title>Trilha Educacional</title>
+    <link rel="stylesheet" href="../styles/trilha.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/spinkit/2.0.1/spinkit.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <title>Trilha Educacional - Resumos</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-eHScC+dGte+Es4snK8b3U5Fb68ebkVVDZj9Y+hKc3DU2kLr1cd7wQ+xyqU6+nBvZ2dfBjbOwbLOj/sUJbn09FQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../styles/perfil.css">
 </head>
 <body>
     <header>
         <div class="logo-3bar">
             <i class="fa-solid fa-bars" id="menu-toggle"></i>
-            <img src="../images/trilha-logo.png" alt="Logo" id="logo">
+            <a href="./main.html"><img src="../images/trilha-logo.png" alt="Logo" id="logo"></a>
             <p>Trilha Educacional</p>
         </div>
         <nav class="nav-header">
@@ -65,23 +66,36 @@
             </ul>
         </div>
         <div class="content" id="content">
-            <h1>Resumos</h1>
-            <div id="materias-container"></div>
+            <div class="user-profile-card" id="user-profile-card">
+                <div class="content-left">
+                    <p>Usuário: <span id="user-name"></span></p>
+                    <p>Email: <span id="perfil-email"></span></p>
+                    <div class="xp-container">
+                        <div class="xp-circle">
+                            <div class="outer-ring"></div>
+                            <div class="inner-circle">
+                                <p>Nível <span id="user-level"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <span id="xp-percent">0%</span>
+                </div>
+                <div class="content-right">
+                    <p>Questões respondidas: </p>
+                </div>
+            </div>
         </div>
     </main>
-    
-    <!-- Modal de Carregamento -->
-    <div class="loading-modal" id="loadingModal" style="display: none;">
+    <!-- <div class="loading-modal" id="loadingModal">
         <div class="sk-chase">
-            <div class="sk-chase-dot"></div>
-            <div class="sk-chase-dot"></div>
-            <div class="sk-chase-dot"></div>
-            <div class="sk-chase-dot"></div>
-            <div class="sk-chase-dot"></div>
-            <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
         </div>
-    </div>
-
+    </div> -->
     <script>
         document.getElementById('menu-toggle').addEventListener('click', function() {
             const navBarLeft = document.getElementById('nav-bar-left');
@@ -89,8 +103,7 @@
             
             const content = document.querySelector('.content');
         });
-    </script>
-    <script type="module" src="../scripts/resumos.js"></script>
+    </script>  
+    <script type="module" src="../scripts/perfil.js"></script>
 </body>
 </html>
-

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trilha Educacional</title>
     <link rel="stylesheet" href="./assets/styles/index.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-eHScC+dGte+Es4snK8b3U5Fb68ebkVVDZj9Y+hKc3DU2kLr1cd7wQ+xyqU6+nBvZ2dfBjbOwbLOj/sUJbn09FQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 </head>
 <body>
@@ -13,11 +13,13 @@
         <div class="form-container sign-up-container">
             <form id="register-form">
                 <h1>Crie sua conta</h1>
+                <!--
                 <div class="social-container">
-                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                    <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" class="social"><i class="fa-brands fa-google"></i></a>
+                    <a href="#" class="social"><i class="fa-brands fa-github"></i></a>
                 </div>
+                -->
                 <span>ou preencha esses campos</span>
                 <div class="infield">
                     <input type="text" placeholder="Nome" required id="name-create"/>
@@ -41,11 +43,13 @@
         <div class="form-container sign-in-container">
             <form id="login-form">
                 <h1>Entrar com</h1>
+                <!--
                 <div class="social-container">
-                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social"><i class="fab fa-google"></i></a>
-                    <a href="#" class="social"><i class="fab fa-github"></i></a>
+                    <a href="#" class="social"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" class="social"><i class="fa-brands fa-google"></i></a>
+                    <a href="#" class="social"><i class="fa-brands fa-github"></i></a>
                 </div>
+                -->
                 <span>ou use outra conta</span>
                 <div class="infield">
                     <input type="email" placeholder="Email" name="email" id="email-login" required/>
@@ -64,13 +68,15 @@
                 <div class="overlay-panel overlay-left">
                     <div class="overlay-left-div">
                         <img src="./assets/images/trilha-logo.png" alt="" class="overlay-logo">
-                        <button>Já tenho conta</button>
+                        <button class="alreadySign-btn">Já tenho conta</button>
+                        <button class="alreadySign-btn-arrow"><span class="icon"><i class="fas fa-arrow-right"></i></span></button>
                     </div>
                 </div>
                 <div class="overlay-panel overlay-right">
                     <div class="overlay-right-div">
                         <img src="./assets/images/trilha-logo.png" alt="" class="overlay-logo">
-                        <button>Quero me cadastrar</button>
+                        <button class="wannaSign-btn">Quero me cadastrar</button>
+                        <button class="wannaSign-btn-arrow"><span class="icon"><span class="icon"><i class="fas fa-arrow-left"></i></span></button>
                     </div>
                 </div>
             </div>

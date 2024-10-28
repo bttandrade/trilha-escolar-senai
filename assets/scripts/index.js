@@ -4,12 +4,23 @@ import { mostrarNotificacao } from './alerts.js';
 const container = document.getElementById('container');
 const signUpButton = document.querySelector('.overlay-right button');
 const signInButton = document.querySelector('.overlay-left button');
+const signUpButtonMobile = document.querySelector('.wannaSign-btn-arrow');
+const signInButtonMobile = document.querySelector('.alreadySign-btn-arrow');
+
 
 signUpButton.addEventListener('click', () => {
     container.classList.add('right-panel-active');
 });
 
+signUpButtonMobile.addEventListener('click', () => {
+    container.classList.add('right-panel-active');
+});
+
 signInButton.addEventListener('click', () => {
+    container.classList.remove('right-panel-active');
+});
+
+signInButtonMobile.addEventListener('click', () => {
     container.classList.remove('right-panel-active');
 });
 
