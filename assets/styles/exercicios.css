@@ -95,3 +95,41 @@
 .swal2-container p {
     margin-bottom: 10px; /* Margem abaixo dos parágrafos */
 }
+
+/* Adicione estes estilos ao seu arquivo CSS */
+.opcoes-container {
+    text-align: left;
+    margin: 20px 0;
+}
+
+.opcao-item {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    padding: 8px;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+
+.opcao-item:hover {
+    background-color: #f5f5f5;
+}
+
+.opcao-item input[type="radio"] {
+    margin-right: 10px;
+}
+
+.opcao-item label {
+    cursor: pointer;
+    flex: 1;
+}
+
+/* Ajuste do estilo do modal SweetAlert */
+.swal2-popup {
+    width: 600px !important; /* Aumenta a largura do modal */
+    max-width: 90vw !important;
+}
+
+.swal2-html-container {
+    margin: 1em 1.6em 0.3em !important;
+}

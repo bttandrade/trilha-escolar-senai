@@ -105,9 +105,9 @@ function mostrarQuestao(questao) {
         title: `Questão`,
         html: `
             <p>${questao.texto}</p>
-            <form id="quizForm">
+            <form id="quizForm" class="opcoes-container">
                 ${questao.alternativas.map((opcao, index) => `
-                    <div>
+                    <div class="opcao-item">
                         <input type="radio" id="opcao${index}" name="resposta" value="${opcao}">
                         <label for="opcao${index}">${opcao}</label>
                     </div>

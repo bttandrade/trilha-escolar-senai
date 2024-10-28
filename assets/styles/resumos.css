@@ -1,3 +1,4 @@
+/* Estilos gerais do container de matérias */
 #materias-container {
     padding: 20px;
 }
@@ -6,44 +7,50 @@
 .materia {
     font-size: 1.5em;
     font-weight: bold;
-    color: #4a4a4a; /* Cor do texto da matéria */
+    color: #4a4a4a;
     margin-bottom: 10px;
     padding: 10px;
-    border-bottom: 2px solid #ccc; /* Linha separadora */
+    border-bottom: 2px solid #ccc;
+    transition: background-color 0.3s;
+}
+
+.materia:hover {
+    background-color: #f0f0f0;
 }
 
 /* Estilos para os assuntos */
 .assuntos-container {
-    padding-left: 20px; /* Indentação para assuntos */
-    margin-bottom: 20px; /* Espaçamento abaixo do container de assuntos */
+    padding-left: 20px;
+    margin-bottom: 20px;
 }
 
 .assunto {
     font-size: 1.2em;
-    color: #007BFF; /* Cor do texto dos assuntos */
-    cursor: pointer; /* Cursor de mão ao passar o mouse */
-    padding: 5px;
-    transition: background-color 0.3s; /* Transição suave */
+    color: #007BFF;
+    cursor: pointer;
+    padding: 10px;
+    margin: 5px;
+    transition: background-color 0.3s;
 }
 
 .assunto:hover {
-    background-color: #f0f8ff; /* Cor de fundo ao passar o mouse */
+    background-color: #f0f8ff;
 }
 
 /* Estilos para o botão de voltar */
 .voltar-button {
-    background-color: #6c757d; /* Cor do fundo do botão */
-    color: white; /* Cor do texto */
+    background-color: #6c757d;
+    color: white;
     border: none;
-    border-radius: 5px; /* Bordas arredondadas */
+    border-radius: 5px;
     padding: 10px 15px;
     cursor: pointer;
-    margin-top: 10px;
-    transition: background-color 0.3s; /* Transição suave */
+    margin: 10px 0;
+    transition: background-color 0.3s;
 }
 
 .voltar-button:hover {
-    background-color: #5a6268; /* Cor ao passar o mouse */
+    background-color: #5a6268;
 }
 
 /* Estilo do modal de carregamento */
@@ -57,5 +64,34 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000; /* Colocar acima de outros elementos */
+    z-index: 1000;
+}
+
+#loadingModal {
+    display: none;
+}
+
+/* Estilos do SweetAlert */
+.swal2-popup {
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.swal2-title {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.swal2-html {
+    text-align: left;
+}
+
+.swal2-confirm,
+.swal2-cancel {
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+
+.swal2-container p {
+    margin-bottom: 10px;
 }
