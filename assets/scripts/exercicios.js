@@ -57,10 +57,11 @@ async function carregarAssuntos(materia, assuntosContainer) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const assuntos = await response.json();
-        if (assuntos.length === 0) {
-            Swal.fire('Aviso', 'Nenhum assunto encontrado para esta matéria.', 'warning');
-            return;
-        }
+        
+        // if (assuntos.length === 0) {
+        //     Swal.fire('Aviso', 'Nenhum assunto encontrado para esta matéria.', 'warning');
+        //     return;
+        // }
 
         assuntos.forEach(assunto => {
             const assuntoDiv = document.createElement('div');

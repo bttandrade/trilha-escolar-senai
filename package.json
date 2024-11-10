@@ -9,6 +9,6 @@
   },
   "type": "module",
   "scripts": {
-    "start": "node ./assets/firebase/server.js"
+    "start": "node --watch ./assets/firebase/server.js"
   }
 }
