@@ -136,7 +136,7 @@ aplicacaoExpress.get("/:materia/:assunto/pdf", async (req, res) => {
     const assunto = decodeURIComponent(req.params.assunto);
 
     // Caminho do arquivo PDF no Firebase Storage
-    const filePath = `${materia}/${assunto}/resumo_matematica_enem.pdf`; // Assumindo que o PDF tem esse nome
+    const filePath = `${materia}/${assunto}/${assunto}.pdf`; // Assumindo que o PDF tem esse nome
     const file = bucket.file(filePath);
 
     // Verifica se o arquivo existe no Firebase Storage
