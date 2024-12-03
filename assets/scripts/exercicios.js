@@ -16,7 +16,7 @@ async function carregarMaterias() {
 
     try {
         showLoading();
-        const response = await fetch('http://localhost:3000/materias');
+        const response = await fetch('/materias');
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -52,7 +52,7 @@ async function carregarMaterias() {
 async function carregarAssuntos(materia, assuntosContainer) {
     try {
         showLoading();
-        const response = await fetch(`http://localhost:3000/${encodeURIComponent(materia)}/assuntos`);
+        const response = await fetch(`/${encodeURIComponent(materia)}/assuntos`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -82,7 +82,7 @@ async function carregarAssuntos(materia, assuntosContainer) {
 async function abrirModalQuestao(materia, assunto) {
     try {
         showLoading();
-        const response = await fetch(`http://localhost:3000/${encodeURIComponent(materia)}/${encodeURIComponent(assunto)}/questoes`);
+        const response = await fetch(`/${encodeURIComponent(materia)}/${encodeURIComponent(assunto)}/questoes`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }

@@ -16,7 +16,7 @@ async function carregarMaterias() {
 
     try {
         showLoading();
-        const response = await fetch('http://localhost:3000/materias'); // Chama a nova rota
+        const response = await fetch('/materias'); // Chama a nova rota
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -52,7 +52,7 @@ async function carregarMaterias() {
 async function carregarAssuntos(materia, assuntosContainer) {
     try {
         showLoading();
-        const response = await fetch(`http://localhost:3000/${encodeURIComponent(materia)}/assuntos`);
+        const response = await fetch(`${encodeURIComponent(materia)}/assuntos`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -87,7 +87,7 @@ async function abrirPdf(materia, assunto) {
         console.log('Matéria recebida:', materia);
 
         // Monta a URL para acessar o PDF
-        const pdfUrl = `http://localhost:3000/${materia}/${assunto}/pdf`;
+        const pdfUrl = `/${materia}/${assunto}/pdf`;
 
         const response = await fetch(pdfUrl);
         if (!response.ok) {

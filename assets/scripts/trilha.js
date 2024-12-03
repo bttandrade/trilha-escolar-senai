@@ -109,7 +109,7 @@ async function abrirModalAssunto(assunto, subject) {
                 cancelButtonText: 'Fechar',
                 html: `
                     <div class="pdf-modal">
-                        <iframe src="http://localhost:3000/${subject}/${assunto}/pdf#toolbar=0&navpanes=0&scrollbar=0" id="pdfIframe"></iframe>
+                        <iframe src="/${subject}/${assunto}/pdf#toolbar=0&navpanes=0&scrollbar=0" id="pdfIframe"></iframe>
                     </div>
                 `,
                 customClass: {
@@ -200,7 +200,7 @@ async function abrirModal(event, subject) {
     }
 
     try {
-        const response = await fetch(`http://localhost:3000/${encodeURIComponent(subject)}/${encodeURIComponent(assunto)}/questoes`);
+        const response = await fetch(`/${encodeURIComponent(subject)}/${encodeURIComponent(assunto)}/questoes`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -362,7 +362,7 @@ async function iniciarQuestao(event, subject, assunto, numeroEsfera) {
     }
 
     try {
-        const response = await fetch(`http://localhost:3000/${encodeURIComponent(subject)}/${encodeURIComponent(assunto)}/questoes`);
+        const response = await fetch(`/${encodeURIComponent(subject)}/${encodeURIComponent(assunto)}/questoes`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
